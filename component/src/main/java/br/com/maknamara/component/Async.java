@@ -1,45 +1,32 @@
 package br.com.maknamara.component;
 
-import android.os.AsyncTask;
-
 import java.util.List;
 
-public class Async<T> extends AsyncTask<Void, Void, List<T>> {
+public class Async<P, T> extends Thread {
 
     private final Executable executable;
     private final Manipulable manipulable;
+    private final P[] params;
 
-    public Async(Executable<T> executable, Manipulable<T> manipulable) {
+    public Async(Executable<P, T> executable, Manipulable<T> manipulable, P... params) {
+        super();
         this.executable = executable;
         this.manipulable = manipulable;
+        this.params = params;
     }
 
     @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
-
-    @Override
-    protected List<T> doInBackground(Void... params) {
+    public void run() {
         try {
-            return executable.execute(params);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    protected void onPostExecute(List<T> result) {
-        try {
+            List<T> result = executable.execute(params);
             manipulable.manipulate(result);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        super.onPostExecute(result);
     }
 
-    public static interface Executable<T> {
-        List<T> execute(Void... params) throws Exception;
+    public static interface Executable<P, T> {
+        List<T> execute(P... params) throws Exception;
     }
 
     public static interface Manipulable<T> {
