@@ -10,6 +10,7 @@ public class Async<P, T> extends Thread {
 
     public Async(Executable<P, T> executable, Manipulable<T> manipulable, P... params) {
         super();
+
         this.executable = executable;
         this.manipulable = manipulable;
         this.params = params;
