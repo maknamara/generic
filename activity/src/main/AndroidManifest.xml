@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.maknamara.activity"
-    android:version-code="10"
-    android:versionCode="111"
-    android:versionCodeMajor="1111"
-    android:versionName="11">
+    package="br.com.maknamara.activity">
 
 </manifest>
