@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.maknamara.model.exceptions.RuleException;
+import br.com.maknamara.activity.R;
 
 @SuppressLint("LongLogTag")
 public class BaseActivity extends AppCompatActivity {
