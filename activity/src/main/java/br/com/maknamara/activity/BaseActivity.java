@@ -14,7 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.maknamara.model.exceptions.RuleException;
-import br.com.maknamara.activity.R;
+
 
 @SuppressLint("LongLogTag")
 public class BaseActivity extends AppCompatActivity {
@@ -68,7 +68,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void showAlertOkCancel(String message, DialogInterface.OnClickListener onClickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle(R.string.message_alert);
+        builder.setTitle(br.com.maknamara.activity.R.string.message_alert);
         builder.setMessage(message);
         builder.setPositiveButton("YES", onClickListener);
         builder.setNegativeButton("NO", null);
@@ -78,7 +78,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected AlertDialog showAwait() {
-        return showAwait(R.string.message_await);
+        return showAwait(br.com.maknamara.activity.R.string.message_await);
     }
 
     protected AlertDialog showAwait(int resourceId) {
