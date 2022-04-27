@@ -53,7 +53,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void showAlertOk(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle(R.string.message_alert);
+        builder.setTitle(br.com.maknamara.activity.R.string.message_alert);
         builder.setMessage(message);
         builder.setPositiveButton("OK", null);
 
