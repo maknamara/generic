@@ -5,22 +5,32 @@ import android.content.Context;
 import com.j256.ormlite.support.ConnectionSource;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import br.com.maknamara.model.BaseEntity;
 import br.com.maknamara.model.dao.GenericDAO;
 import br.com.maknamara.model.dao.Helper;
 import br.com.maknamara.model.validator.BaseValidator;
 
+@SuppressWarnings({"unchecked"})
 public class BaseService<T extends BaseEntity, D extends GenericDAO<T>, V extends BaseValidator<T>> {
     protected D dao;
     protected V validador;
-    private Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-    private Class<D> daoClass = (Class<D>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-    private Class<V> validatorClass = (Class<V>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[2];
+
+    private Class<T> entityClass;
+    private Class<D> daoClass;
+    private Class<V> validatorClass;
 
     public BaseService(Context context) throws Exception {
+        Type[] types = ((ParameterizedType) Objects.requireNonNull(getClass().getGenericSuperclass())).getActualTypeArguments();
+
+        entityClass = (Class<T>) types[0];
+        daoClass = (Class<D>) types[1];
+        validatorClass = (Class<V>) types[2];
+
         Helper helper = new Helper(context);
         dao = daoClass.getDeclaredConstructor(ConnectionSource.class).newInstance(helper.getConnectionSource());
         validador = validatorClass.getDeclaredConstructor().newInstance();

@@ -2,12 +2,14 @@ package br.com.maknamara.component;
 
 import java.util.List;
 
+@SuppressWarnings({"unchecked", "unused"})
 public class Async<P, T> extends Thread {
 
-    private final Executable executable;
-    private final Manipulable manipulable;
+    private final Executable<P, T> executable;
+    private final Manipulable<T> manipulable;
     private final P[] params;
 
+    @SafeVarargs
     public Async(Executable<P, T> executable, Manipulable<T> manipulable, P... params) {
         super();
 
@@ -26,11 +28,11 @@ public class Async<P, T> extends Thread {
         }
     }
 
-    public static interface Executable<P, T> {
+    public interface Executable<P, T> {
         List<T> execute(P... params) throws Exception;
     }
 
-    public static interface Manipulable<T> {
+    public interface Manipulable<T> {
         void manipulate(List<T> result) throws Exception;
     }
 }

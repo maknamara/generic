@@ -10,6 +10,7 @@ import com.j256.ormlite.table.TableUtils;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Objects;
 
 import br.com.maknamara.model.BaseEntity;
 import dalvik.system.DexFile;
@@ -18,7 +19,7 @@ public class Helper extends OrmLiteSqliteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private final Context context;
-    private List<Class<?>> classes = new ArrayList<>();
+    private final List<Class<?>> classes = new ArrayList<>();
 
     public Helper(Context context) {
         super(context, "database.db", null, DATABASE_VERSION);
@@ -64,7 +65,7 @@ public class Helper extends OrmLiteSqliteOpenHelper {
     }
 
     private void loadClasses() throws Exception {
-        String packageName = BaseEntity.class.getPackage().getName();
+        String packageName = Objects.requireNonNull(BaseEntity.class.getPackage()).getName();
         if (classes.isEmpty()) {
             String packageCodePath = context.getPackageCodePath();
             Enumeration<String> enumeration = new DexFile(packageCodePath).entries();
