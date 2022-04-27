@@ -53,7 +53,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void showAlertOk(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle(br.com.maknamara.activity.R.string.message_alert);
+        builder.setTitle(R.string.message_alert);
         builder.setMessage(message);
         builder.setPositiveButton("OK", null);
 
@@ -68,7 +68,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void showAlertOkCancel(String message, DialogInterface.OnClickListener onClickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle(br.com.maknamara.activity.R.string.message_alert);
+        builder.setTitle(R.string.message_alert);
         builder.setMessage(message);
         builder.setPositiveButton("YES", onClickListener);
         builder.setNegativeButton("NO", null);
