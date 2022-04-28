@@ -1,6 +1,7 @@
 package br.com.maknamara.activity;
 
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.Objects;
 
@@ -108,5 +111,19 @@ public class BaseActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
         return alert;
+    }
+
+    protected void chekPermission(String... permissions) {
+        boolean hasPermission = true;
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                hasPermission = false;
+                break;
+            }
+        }
+
+        if (!hasPermission) {
+            ActivityCompat.requestPermissions(this, permissions, 1);
+        }
     }
 }
