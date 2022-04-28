@@ -55,6 +55,7 @@ public class BaseActivity extends AppCompatActivity {
         builder.setTitle(R.string.message_alert);
         builder.setMessage(message);
         builder.setPositiveButton("OK", null);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
 
         AlertDialog alert = builder.create();
         alert.show();
@@ -71,6 +72,7 @@ public class BaseActivity extends AppCompatActivity {
         builder.setMessage(message);
         builder.setPositiveButton("YES", onClickListener);
         builder.setNegativeButton("NO", null);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
 
         AlertDialog alert = builder.create();
         alert.show();
