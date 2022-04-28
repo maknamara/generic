@@ -1,6 +1,5 @@
 package br.com.maknamara.activity;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,10 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
 import br.com.maknamara.model.exceptions.RuleException;
 
-
-@SuppressLint("LongLogTag")
 public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class BaseActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
 
         if (RuleException.class.isAssignableFrom(t.getClass())) {
-            String[] keyMessages = t.getMessage().split(",");
+            String[] keyMessages = Objects.requireNonNull(t.getMessage()).split(",");
             for (String key : keyMessages) {
                 sb.append(getResources().getString(Integer.parseInt(key)));
                 sb.append("\r\n");
@@ -43,7 +42,7 @@ public class BaseActivity extends AppCompatActivity {
             sb.append(t.getMessage());
         }
         showAlertOk(sb.toString());
-        Log.v("br.com.maknamara.taskmanager.BaseActivity.handleExceptions", e.getMessage() + ": " + sb, e);
+        Log.v(getClass().getName() + "handleExceptions", e.getMessage() + ": " + sb, e);
     }
 
     protected void showAlertOk(int messageId) {

@@ -2,11 +2,13 @@ package br.com.maknamara.model.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.Objects;
 
 import br.com.maknamara.model.BaseEntity;
 import dalvik.system.DexFile;
+import dalvik.system.PathClassLoader;
 
 public class Helper extends OrmLiteSqliteOpenHelper {
 
@@ -68,6 +71,14 @@ public class Helper extends OrmLiteSqliteOpenHelper {
         String packageName = Objects.requireNonNull(BaseEntity.class.getPackage()).getName();
         if (classes.isEmpty()) {
             String packageCodePath = context.getPackageCodePath();
+
+            PathClassLoader pathClassLoader = new PathClassLoader(packageCodePath, ClassLoader.getSystemClassLoader());
+            Enumeration<URL> en = pathClassLoader.getResources("");
+            while (en.hasMoreElements()) {
+                URL el = en.nextElement();
+                Log.v("loadClasses", el.toString());
+            }
+
             Enumeration<String> enumeration = new DexFile(packageCodePath).entries();
             while (enumeration.hasMoreElements()) {
                 String className = enumeration.nextElement();
