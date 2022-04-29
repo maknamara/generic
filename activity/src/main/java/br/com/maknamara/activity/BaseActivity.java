@@ -43,9 +43,14 @@ public class BaseActivity extends AppCompatActivity {
             }
         } else {
             sb.append(t.getMessage());
+            sb.append(":\r\n");
+            for (StackTraceElement st : t.getStackTrace()) {
+                sb.append(st.toString());
+                sb.append("\r\n");
+            }
         }
+        Log.v(getClass().getName() + "handleExceptions", sb.toString(), e);
         showAlertOk(sb.toString());
-        Log.v(getClass().getName() + "handleExceptions", e.getMessage() + ": " + sb, e);
     }
 
     protected void showAlertOk(int messageId) {
@@ -91,16 +96,14 @@ public class BaseActivity extends AppCompatActivity {
 
     protected AlertDialog showAwait(String message) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LinearLayout ll = new LinearLayout(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
+        LinearLayout ll = new LinearLayout(BaseActivity.this);
+        ProgressBar pb = new ProgressBar(BaseActivity.this);
+        TextView tv = new TextView(BaseActivity.this);
 
         ll.setGravity(Gravity.CENTER | Gravity.START);
-
-        ProgressBar pb = new ProgressBar(this);
-        TextView tv = new TextView(this);
-        tv.setText(message);
-
         pb.setIndeterminate(true);
+        tv.setText(message);
 
         ll.setOrientation(LinearLayout.HORIZONTAL);
         ll.addView(pb);
