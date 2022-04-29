@@ -150,12 +150,12 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected SSLSocketFactory getSSLSocketFactory(@NonNull String fileName) throws Exception {
+    protected SSLSocketFactory getSSLSocketFactory(@NonNull String crtFileName) throws Exception {
         // Load CAs from an InputStream
         // (could be from a resource or ByteArrayInputStream or ...)
         CertificateFactory cf = CertificateFactory.getInstance("X.509");
 
-        BufferedInputStream bis = new BufferedInputStream(getAssets().open(fileName));
+        BufferedInputStream bis = new BufferedInputStream(getAssets().open(crtFileName));
         Certificate ca;
         try {
             ca = cf.generateCertificate(bis);
