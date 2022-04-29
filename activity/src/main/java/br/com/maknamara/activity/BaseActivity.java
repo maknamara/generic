@@ -9,13 +9,23 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.BufferedInputStream;
+import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.Objects;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
 
 import br.com.maknamara.model.exceptions.RuleException;
 
@@ -123,9 +133,7 @@ public class BaseActivity extends AppCompatActivity {
 
         builder.setView(ll);
 
-        AlertDialog alert = builder.create();
-        alert.show();
-        return alert;
+        return builder.create();
     }
 
     protected void chekPermission(String... permissions) {
@@ -140,5 +148,38 @@ public class BaseActivity extends AppCompatActivity {
         if (!hasPermission) {
             ActivityCompat.requestPermissions(this, permissions, 1);
         }
+    }
+
+    protected SSLSocketFactory getSSLSocketFactory(@NonNull String fileName) throws Exception {
+        // Load CAs from an InputStream
+        // (could be from a resource or ByteArrayInputStream or ...)
+        CertificateFactory cf = CertificateFactory.getInstance("X.509");
+
+        BufferedInputStream bis = new BufferedInputStream(getAssets().open(fileName));
+        Certificate ca;
+        try {
+            ca = cf.generateCertificate(bis);
+            System.out.println("ca=" + ((X509Certificate) ca).getSubjectDN());
+        } finally {
+            bis.close();
+        }
+
+        // Create a KeyStore containing our trusted CAs
+        String keyStoreType = KeyStore.getDefaultType();
+        KeyStore keyStore = KeyStore.getInstance(keyStoreType);
+        keyStore.load(null, null);
+        keyStore.setCertificateEntry("ca", ca);
+
+        // Create a TrustManager that trusts the CAs in our KeyStore
+        String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+        TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+        tmf.init(keyStore);
+
+        // Create an SSLContext that uses our TrustManager
+        SSLContext context = SSLContext.getInstance("TLS");
+        context.init(null, tmf.getTrustManagers(), null);
+
+        // Tell the URLConnection to use a SocketFactory from our SSLContext
+        return context.getSocketFactory();
     }
 }
