@@ -49,8 +49,20 @@ public class BaseActivity extends AppCompatActivity {
                 sb.append("\r\n");
             }
         }
-        Log.v(getClass().getName() + "handleExceptions", sb.toString(), e);
+        this.log(sb.toString(), e);
         showAlertOk(sb.toString());
+    }
+
+    protected void log(String message) {
+        Log.v(getClass().getName() + "handleExceptions", message);
+    }
+
+    protected void log(Throwable e) {
+        log(e.getMessage(), e);
+    }
+
+    protected void log(String message, Throwable e) {
+        Log.v(getClass().getName() + "handleExceptions", message, e);
     }
 
     protected void showAlertOk(int messageId) {
