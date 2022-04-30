@@ -25,6 +25,7 @@ public class BaseService<T extends BaseEntity, D extends GenericDAO<T>, V extend
     private Class<V> validatorClass;
 
     public BaseService(Context context) throws Exception {
+
         Type[] types = ((ParameterizedType) Objects.requireNonNull(getClass().getGenericSuperclass())).getActualTypeArguments();
 
         entityClass = (Class<T>) types[0];

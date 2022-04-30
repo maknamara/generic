@@ -3,15 +3,4 @@
     package="br.com.maknamara.activity"
     android:versionCode="1"
     android:versionName="1.0">
-
-    <application>
-        <activity
-            android:name=".AboutActivity"
-            android:configChanges="orientation|screenSize"
-            android:parentActivityName=".BaseActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BaseActivity" />
-        </activity>
-    </application>
 </manifest>
