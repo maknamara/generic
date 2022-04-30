@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -36,13 +37,17 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (pressedTime + 2000 > System.currentTimeMillis()) {
-            super.onBackPressed();
-            finish();
+        if (getClass().getSimpleName().equals("MainActivity")) {
+            if (pressedTime + 2000 > System.currentTimeMillis()) {
+                super.onBackPressed();
+                finish();
+            } else {
+                showToastShort(br.com.maknamara.activity.R.string.press_back_again_to_exit);
+            }
+            pressedTime = System.currentTimeMillis();
         } else {
-            Toast.makeText(getBaseContext(), br.com.maknamara.activity.R.string.press_back_again_to_exit, Toast.LENGTH_SHORT).show();
+            //e aqui?
         }
-        pressedTime = System.currentTimeMillis();
     }
 
     @Override
@@ -52,30 +57,46 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void handleExceptions(Exception e) {
 
-        Throwable t = e;
+        Throwable throwable = e;
 
-        while (t.getCause() != null) {
-            t = t.getCause();
+        while (throwable.getCause() != null) {
+            throwable = throwable.getCause();
         }
 
         StringBuilder sb = new StringBuilder();
 
-        if (RuleException.class.isAssignableFrom(t.getClass())) {
-            String[] keyMessages = Objects.requireNonNull(t.getMessage()).split(",");
+        if (RuleException.class.isAssignableFrom(throwable.getClass())) {
+            String[] keyMessages = Objects.requireNonNull(throwable.getMessage()).split(",");
             for (String key : keyMessages) {
                 sb.append(getResources().getString(Integer.parseInt(key)));
                 sb.append("\r\n");
             }
         } else {
-            sb.append(t.getMessage());
+            sb.append(throwable.getMessage());
             sb.append(":\r\n");
-            for (StackTraceElement st : t.getStackTrace()) {
+            for (StackTraceElement st : throwable.getStackTrace()) {
                 sb.append(st.toString());
                 sb.append("\r\n");
             }
         }
         this.log(sb.toString(), e);
         showAlertOk(sb.toString());
+    }
+
+    protected void showToastLong(@StringRes int resourceId) {
+        showToastLong(getString(resourceId));
+    }
+
+    protected void showToastLong(@NonNull String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    protected void showToastShort(@StringRes int resourceId) {
+        showToastShort(getString(resourceId));
+    }
+
+    protected void showToastShort(@NonNull String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     protected void log(String message) {
