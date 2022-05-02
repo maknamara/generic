@@ -4,4 +4,5 @@
     <string name="message_alert">Attention!</string>
     <string name="about">About</string>
     <string name="press_back_again_to_exit">Press back again to exit</string>
+    <string name="last_update_time">Last update time: </string>
 </resources>

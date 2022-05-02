@@ -31,6 +31,7 @@ import javax.net.ssl.TrustManagerFactory;
 
 import br.com.maknamara.model.exceptions.RuleException;
 
+@SuppressWarnings({"unused"})
 public class BaseActivity extends AppCompatActivity {
 
     private long pressedTime;
@@ -46,7 +47,7 @@ public class BaseActivity extends AppCompatActivity {
             }
             pressedTime = System.currentTimeMillis();
         } else {
-            //e aqui?
+            super.onBackPressed();
         }
     }
 

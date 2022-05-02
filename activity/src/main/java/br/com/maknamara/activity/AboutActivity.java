@@ -6,11 +6,6 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import br.com.maknamara.activity.BaseActivity;
-import br.com.maknamara.activity.R;
-
 public class AboutActivity extends BaseActivity {
 
     @Override
@@ -22,17 +17,21 @@ public class AboutActivity extends BaseActivity {
         ImageView imageView = findViewById(R.id.logoImageView);
         imageView.setImageResource(android.R.drawable.ic_menu_myplaces);
 
-        try{
+        try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_CONFIGURATIONS);
 
             TextView applicationName = findViewById(R.id.applicationName);
             ImageView logoImageView = findViewById(R.id.logoImageView);
+            TextView applicationVersion = findViewById(R.id.applicationVersion);
+            TextView lastUpdate = findViewById(R.id.lastUpdate);
 
             logoImageView.setImageResource(info.applicationInfo.icon);
             applicationName.setText(info.applicationInfo.labelRes);
 
+            applicationVersion.setText(String.format("V%s", info.versionName));
+            lastUpdate.setText(String.format("%s%s", getString(R.string.last_update_time), info.lastUpdateTime));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             handleExceptions(e);
         }
     }
