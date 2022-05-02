@@ -14,18 +14,16 @@ public class AboutActivity extends BaseActivity {
         setContentView(R.layout.activity_about);
         setTitle(R.string.about);
 
-        ImageView imageView = findViewById(R.id.logoImageView);
-        imageView.setImageResource(android.R.drawable.ic_menu_myplaces);
-
         try {
+            ImageView imageView = findViewById(R.id.logoImageView);
+            imageView.setImageResource(android.R.drawable.ic_menu_myplaces);
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_CONFIGURATIONS);
 
             TextView applicationName = findViewById(R.id.applicationName);
-            ImageView logoImageView = findViewById(R.id.logoImageView);
             TextView applicationVersion = findViewById(R.id.applicationVersion);
             TextView lastUpdate = findViewById(R.id.lastUpdate);
 
-            logoImageView.setImageResource(info.applicationInfo.icon);
+            imageView.setImageResource(info.applicationInfo.icon);
             applicationName.setText(info.applicationInfo.labelRes);
 
             applicationVersion.setText(String.format("V%s", info.versionName));
