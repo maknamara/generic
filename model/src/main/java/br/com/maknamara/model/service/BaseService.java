@@ -33,6 +33,7 @@ public class BaseService<T extends BaseEntity, D extends GenericDAO<T>, V extend
         validatorClass = (Class<V>) types[2];
 
         Helper helper = new Helper(context);
+
         dao = daoClass.getDeclaredConstructor(ConnectionSource.class).newInstance(helper.getConnectionSource());
         validador = validatorClass.getDeclaredConstructor().newInstance();
     }

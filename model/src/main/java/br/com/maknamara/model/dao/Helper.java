@@ -2,7 +2,6 @@ package br.com.maknamara.model.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -15,8 +14,8 @@ import java.util.List;
 import java.util.Objects;
 
 import br.com.maknamara.model.BaseEntity;
+import dalvik.system.DexClassLoader;
 import dalvik.system.DexFile;
-import dalvik.system.PathClassLoader;
 
 public class Helper extends OrmLiteSqliteOpenHelper {
 
@@ -70,21 +69,15 @@ public class Helper extends OrmLiteSqliteOpenHelper {
     private void loadClasses() throws Exception {
         String packageName = Objects.requireNonNull(BaseEntity.class.getPackage()).getName();
         if (classes.isEmpty()) {
-            String packageCodePath = context.getPackageCodePath();
 
-            PathClassLoader pathClassLoader = new PathClassLoader(packageCodePath, ClassLoader.getSystemClassLoader());
-            Enumeration<URL> en = pathClassLoader.getResources("");
-            while (en.hasMoreElements()) {
-                URL el = en.nextElement();
-                Log.v("loadClasses", el.toString());
-            }
+            DexFile dexFile = new DexFile(context.getPackageCodePath());
+            Enumeration<String> enumeration = dexFile.entries();
 
-            Enumeration<String> enumeration = new DexFile(packageCodePath).entries();
             while (enumeration.hasMoreElements()) {
                 String className = enumeration.nextElement();
-                if (className.contains(packageName)) {
+                if (className.startsWith("br.com.maknamara") && !className.contains("$") && !className.equals(BaseEntity.class.getName())) {
                     Class<?> clazz = Class.forName(className);
-                    if (!BaseEntity.class.equals(clazz) && BaseEntity.class.isAssignableFrom(clazz)) {
+                    if (BaseEntity.class.isAssignableFrom(clazz)) {
                         classes.add(clazz);
                     }
                 }

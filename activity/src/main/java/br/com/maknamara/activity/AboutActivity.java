@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AboutActivity extends BaseActivity {
 
     @Override
@@ -27,7 +30,7 @@ public class AboutActivity extends BaseActivity {
             applicationName.setText(info.applicationInfo.labelRes);
 
             applicationVersion.setText(String.format("V%s", info.versionName));
-            lastUpdate.setText(String.format("%s%s", getString(R.string.last_update_time), info.lastUpdateTime));
+            lastUpdate.setText(String.format("%s%s", getString(R.string.last_update_time), new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(new Date(info.lastUpdateTime))));
 
         } catch (Exception e) {
             handleExceptions(e);
