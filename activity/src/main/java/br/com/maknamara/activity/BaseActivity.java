@@ -124,8 +124,7 @@ public class BaseActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", null);
         builder.setIcon(android.R.drawable.ic_dialog_info);
 
-        AlertDialog alert = builder.create();
-        alert.show();
+        builder.create().show();
     }
 
     protected void showAlertOkCancel(int messageId, DialogInterface.OnClickListener onClickListener) {
@@ -141,8 +140,7 @@ public class BaseActivity extends AppCompatActivity {
         builder.setNegativeButton("NO", null);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
 
-        AlertDialog alert = builder.create();
-        alert.show();
+        builder.create().show();
     }
 
     protected AlertDialog showAwait() {
