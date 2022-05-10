@@ -35,7 +35,7 @@ import br.com.maknamara.model.exceptions.RuleException;
 public class BaseActivity extends AppCompatActivity {
 
     private long pressedTime;
-    private BaseActivity baseActivity;
+    protected BaseActivity baseActivity;
 
     public BaseActivity() {
         baseActivity = this;
