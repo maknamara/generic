@@ -30,6 +30,7 @@ android {
             withJavadocJar()
         }
     }
+    namespace 'br.com.maknamara.component'
 }
 afterEvaluate {
     publishing {

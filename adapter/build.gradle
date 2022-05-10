@@ -30,6 +30,7 @@ android {
             withJavadocJar()
         }
     }
+    namespace 'br.com.maknamara.adapter'
 }
 afterEvaluate {
     publishing {

@@ -35,6 +35,11 @@ import br.com.maknamara.model.exceptions.RuleException;
 public class BaseActivity extends AppCompatActivity {
 
     private long pressedTime;
+    private BaseActivity baseActivity;
+
+    public BaseActivity() {
+        baseActivity = this;
+    }
 
     @Override
     public void onBackPressed() {
@@ -171,10 +176,14 @@ public class BaseActivity extends AppCompatActivity {
         return builder.create();
     }
 
-    protected void chekPermission(String... permissions) {
+    protected boolean isPermissionGranted(String permission) {
+        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    protected void chekPermissions(String... permissions) {
         boolean hasPermission = true;
         for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (!isPermissionGranted(permission)) {
                 hasPermission = false;
                 break;
             }
