@@ -15,7 +15,6 @@ public class Async<P, T> {
 
     public Async(Executable<P, T> executable, Manipulable<T> manipulable) {
         super();
-
         this.executable = executable;
         this.manipulable = manipulable;
     }
@@ -24,7 +23,6 @@ public class Async<P, T> {
     public final void execute(P... params) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
-
         executor.execute(() -> {
             try {
                 List<T> result = executable.execute(params);

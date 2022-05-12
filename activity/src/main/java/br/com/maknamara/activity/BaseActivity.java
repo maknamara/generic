@@ -29,6 +29,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
+import br.com.maknamara.component.CustomHandlerThread;
 import br.com.maknamara.model.exceptions.RuleException;
 
 @SuppressWarnings({"unused"})
@@ -36,9 +37,10 @@ public class BaseActivity extends AppCompatActivity {
 
     private long pressedTime;
     protected BaseActivity baseActivity;
-
+    protected CustomHandlerThread customHandlerThread;
     public BaseActivity() {
         baseActivity = this;
+        customHandlerThread= new CustomHandlerThread();
     }
 
     @Override
@@ -59,6 +61,12 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        customHandlerThread.quit();
     }
 
     protected void handleExceptions(Exception e) {
