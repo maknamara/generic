@@ -4,6 +4,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.j256.ormlite.field.DatabaseField;
@@ -22,6 +23,7 @@ public class BaseEntity {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private Date registrationDate;
 
+    @JsonIgnore
     public boolean isNew() {
         return id == null;
     }
