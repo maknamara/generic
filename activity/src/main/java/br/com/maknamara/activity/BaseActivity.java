@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.io.BufferedInputStream;
+import java.lang.reflect.Method;
 import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
@@ -38,9 +39,10 @@ public class BaseActivity extends AppCompatActivity {
     private long pressedTime;
     protected BaseActivity baseActivity;
     protected CustomHandlerThread customHandlerThread;
+
     public BaseActivity() {
         baseActivity = this;
-        customHandlerThread= new CustomHandlerThread();
+        customHandlerThread = new CustomHandlerThread();
     }
 
     @Override
@@ -60,6 +62,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        ((BaseApplication) getApplicationContext()).inject(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -233,5 +236,27 @@ public class BaseActivity extends AppCompatActivity {
 
         // Tell the URLConnection to use a SocketFactory from our SSLContext
         return context.getSocketFactory();
+    }
+
+    protected <R> R invoke(@NonNull String methodName, @NonNull Object... values) {
+        Class<?>[] classes = new Class[values.length];
+        int i = 0;
+        for (Object o : values) {
+            classes[i++] = o.getClass();
+        }
+        Method method;
+        try {
+            method = getClass().getDeclaredMethod(methodName, classes);
+            method.setAccessible(true);
+            return (R) method.invoke(this, values);
+        } catch (Exception e) {
+            try {
+                method = getClass().getMethod(methodName, classes);
+                method.setAccessible(true);
+                return (R) method.invoke(this, values);
+            } catch (Exception e_) {
+                throw new RuntimeException(e_);
+            }
+        }
     }
 }

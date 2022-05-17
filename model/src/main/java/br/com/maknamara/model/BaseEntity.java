@@ -1,15 +1,10 @@
 package br.com.maknamara.model;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.field.DatabaseField;
 
 import java.util.Date;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class BaseEntity {
     @DatabaseField(generatedId = true)
     public Long id;

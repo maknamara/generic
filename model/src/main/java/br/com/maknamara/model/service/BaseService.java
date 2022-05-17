@@ -15,27 +15,28 @@ import br.com.maknamara.model.dao.GenericDAO;
 import br.com.maknamara.model.dao.Helper;
 import br.com.maknamara.model.validator.BaseValidator;
 
-@SuppressWarnings({"unchecked"})
 public class BaseService<T extends BaseEntity, D extends GenericDAO<T>, V extends BaseValidator<T>> {
     protected D dao;
     protected V validador;
-
     private Class<T> entityClass;
     private Class<D> daoClass;
     private Class<V> validatorClass;
 
-    public BaseService(Context context) throws Exception {
+    public BaseService(Context context) {
+        try {
+            Type[] types = ((ParameterizedType) Objects.requireNonNull(getClass().getGenericSuperclass())).getActualTypeArguments();
 
-        Type[] types = ((ParameterizedType) Objects.requireNonNull(getClass().getGenericSuperclass())).getActualTypeArguments();
+            entityClass = (Class<T>) types[0];
+            daoClass = (Class<D>) types[1];
+            validatorClass = (Class<V>) types[2];
 
-        entityClass = (Class<T>) types[0];
-        daoClass = (Class<D>) types[1];
-        validatorClass = (Class<V>) types[2];
+            Helper helper = new Helper(context);
 
-        Helper helper = new Helper(context);
-
-        dao = daoClass.getDeclaredConstructor(ConnectionSource.class).newInstance(helper.getConnectionSource());
-        validador = validatorClass.getDeclaredConstructor().newInstance();
+            dao = daoClass.getDeclaredConstructor(ConnectionSource.class).newInstance(helper.getConnectionSource());
+            validador = validatorClass.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public List<T> findAll() throws Exception {
