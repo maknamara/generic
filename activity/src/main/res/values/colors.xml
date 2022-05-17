@@ -12,7 +12,7 @@
     <color name="ddd">#ddd</color>
     <color name="eee">#eee</color>
     <color name="fff">#fff</color>
-    <color name="colorPrimary">#aaa</color>
-    <color name="colorPrimaryDark">#bbb</color>
+    <color name="colorPrimary">#bbb</color>
+    <color name="colorPrimaryDark">#aaa</color>
     <color name="colorAccent">#ccc</color>
 </resources>
