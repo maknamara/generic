@@ -1,11 +1,12 @@
 package br.com.maknamara.model.di;
 
+import androidx.annotation.NonNull;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import br.com.maknamara.model.annotation.Inject;
 
@@ -16,10 +17,11 @@ public class DI {
     private DI() {
     }
 
-    public static void inject(Object object) {
+    public static void inject(@NonNull Object object) {
         try {
-            Objects.requireNonNull(object, "Object can't be null!");
+            System.out.println(DI.class.getName() + ".inject in - " + object.getClass().getName());
             injectDependenciesByFields(object);
+            System.out.println(DI.class.getName() + ".inject in - " + object.getClass().getName() + " - DONE");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
