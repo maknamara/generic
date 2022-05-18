@@ -7,7 +7,6 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-
 public class NotificationTool {
     private static final String CHANNEL_ID = NotificationTool.class.getName();
 

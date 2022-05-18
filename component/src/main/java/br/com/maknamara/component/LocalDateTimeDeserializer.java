@@ -11,8 +11,8 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         return LocalDateTime.parse(jsonParser.getText());

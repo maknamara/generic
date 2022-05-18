@@ -31,9 +31,10 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 import br.com.maknamara.component.CustomHandlerThread;
+import br.com.maknamara.model.di.DI;
 import br.com.maknamara.model.exceptions.RuleException;
 
-@SuppressWarnings({"unused"})
+@SuppressWarnings({"unused", "unchecked"})
 public class BaseActivity extends AppCompatActivity {
 
     private long pressedTime;
@@ -62,7 +63,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        ((BaseApplication) getApplicationContext()).inject(this);
+        DI.inject(this);
         super.onCreate(savedInstanceState);
     }
 

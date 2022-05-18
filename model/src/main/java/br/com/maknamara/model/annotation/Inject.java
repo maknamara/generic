@@ -1,4 +1,4 @@
-package br.com.maknamara.component;
+package br.com.maknamara.model.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,9 +9,10 @@ import java.lang.annotation.Target;
 @Target({
         //ElementType.CONSTRUCTOR,
         //ElementType.METHOD,
-        //ElementType.PARAMETER,
+        ElementType.PARAMETER,
         ElementType.FIELD,
-        //ElementType.ANNOTATION_TYPE
+        //ElementType.ANNOTATION_TYPE,
+        //ElementType.TYPE
 })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

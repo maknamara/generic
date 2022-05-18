@@ -3,18 +3,19 @@ package br.com.maknamara.model.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.annotation.NonNull;
+
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 
+import br.com.maknamara.model.annotation.Inject;
 import br.com.maknamara.model.BaseEntity;
-import dalvik.system.DexClassLoader;
 import dalvik.system.DexFile;
 
 public class Helper extends OrmLiteSqliteOpenHelper {
@@ -23,7 +24,7 @@ public class Helper extends OrmLiteSqliteOpenHelper {
     private final Context context;
     private final List<Class<?>> classes = new ArrayList<>();
 
-    public Helper(Context context) {
+    public Helper(@NonNull @Inject("context") Context context) {
         super(context, "database.db", null, DATABASE_VERSION);
         this.context = context;
     }
