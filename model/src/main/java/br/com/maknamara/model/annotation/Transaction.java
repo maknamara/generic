@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Transaction {
+    //TODO COMO IMPLEMNTAR TRANSAÇÃO NAS CLASSES(SERVICES) QUE PRECISAREM DESSE RECURSO
 }

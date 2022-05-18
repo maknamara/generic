@@ -14,8 +14,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 
-import br.com.maknamara.model.annotation.Inject;
 import br.com.maknamara.model.BaseEntity;
+import br.com.maknamara.model.annotation.Inject;
 import dalvik.system.DexFile;
 
 public class Helper extends OrmLiteSqliteOpenHelper {
@@ -31,6 +31,7 @@ public class Helper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
+        System.out.println(this.getClass().getName() + ".onCreate");
         try {
             loadClasses();
             for (Class<?> clazz : classes) {
@@ -39,10 +40,12 @@ public class Helper extends OrmLiteSqliteOpenHelper {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        System.out.println(this.getClass().getName() + ".onCreate - DONE");
     }
 
     @Override
     public void onDowngrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+        System.out.println(this.getClass().getName() + ".onDowngrade");
         try {
             loadClasses();
             for (Class<?> clazz : classes) {
@@ -52,10 +55,12 @@ public class Helper extends OrmLiteSqliteOpenHelper {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        System.out.println(this.getClass().getName() + ".onDowngrade - DONE");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
+        System.out.println(this.getClass().getName() + ".onUpgrade");
         try {
             loadClasses();
             for (Class<?> clazz : classes) {
@@ -65,12 +70,14 @@ public class Helper extends OrmLiteSqliteOpenHelper {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        System.out.println(this.getClass().getName() + ".onUpgrade - DONE");
     }
 
     private void loadClasses() throws Exception {
+        System.out.println(this.getClass().getName() + ".loadClasses");
         String packageName = Objects.requireNonNull(BaseEntity.class.getPackage()).getName();
         if (classes.isEmpty()) {
-
+            //TODO RESOLVER PROBLEMA DA CLASSE DEPRECIADA: DexFile
             DexFile dexFile = new DexFile(context.getPackageCodePath());
             Enumeration<String> enumeration = dexFile.entries();
 
@@ -84,5 +91,6 @@ public class Helper extends OrmLiteSqliteOpenHelper {
                 }
             }
         }
+        System.out.println(this.getClass().getName() + ".loadClasses - DONE");
     }
 }
