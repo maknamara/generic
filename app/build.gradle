@@ -29,6 +29,7 @@ android {
 }
 dependencies {
     implementation project(path: ':component')
+    testImplementation project(path: ':activity')
     def test = ''
     implementation project(path: ':model')
     implementation 'androidx.appcompat:appcompat:1.4.1'

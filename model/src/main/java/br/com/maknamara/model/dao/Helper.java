@@ -6,9 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.NonNull;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.logger.LocalLogBackend;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.Objects;
 import br.com.maknamara.model.BaseEntity;
 import br.com.maknamara.model.annotation.Inject;
 import dalvik.system.DexFile;
+import dalvik.system.PathClassLoader;
 
 public class Helper extends OrmLiteSqliteOpenHelper {
 
@@ -27,6 +30,7 @@ public class Helper extends OrmLiteSqliteOpenHelper {
     public Helper(@NonNull @Inject("context") Context context) {
         super(context, "database.db", null, DATABASE_VERSION);
         this.context = context;
+        System.setProperty(LocalLogBackend.LOCAL_LOG_LEVEL_PROPERTY, "TRACE");
     }
 
     @Override
@@ -78,6 +82,13 @@ public class Helper extends OrmLiteSqliteOpenHelper {
         String packageName = Objects.requireNonNull(BaseEntity.class.getPackage()).getName();
         if (classes.isEmpty()) {
             //TODO RESOLVER PROBLEMA DA CLASSE DEPRECIADA: DexFile
+
+            Enumeration<URL> enumeration_ = PathClassLoader.getSystemResources(context.getPackageCodePath());
+            if (enumeration_.hasMoreElements()) {
+                URL url = enumeration_.nextElement();
+                url.toURI();
+            }
+
             DexFile dexFile = new DexFile(context.getPackageCodePath());
             Enumeration<String> enumeration = dexFile.entries();
 

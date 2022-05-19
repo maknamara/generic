@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class AboutActivity extends BaseActivity {
 
@@ -30,7 +31,7 @@ public class AboutActivity extends BaseActivity {
             applicationName.setText(info.applicationInfo.labelRes);
 
             applicationVersion.setText(String.format("V%s", info.versionName));
-            lastUpdate.setText(String.format("%s%s", getString(R.string.last_update_time), new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(new Date(info.lastUpdateTime))));
+            lastUpdate.setText(String.format("%s%s", getString(R.string.last_update_time), new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS", Locale.US).format(new Date(info.lastUpdateTime))));
 
         } catch (Exception e) {
             handleExceptions(e);
