@@ -37,9 +37,9 @@ import br.com.maknamara.model.exceptions.RuleException;
 @SuppressWarnings({"unused", "unchecked"})
 public class BaseActivity extends AppCompatActivity {
 
-    private long pressedTime;
     protected BaseActivity baseActivity;
     protected CustomHandlerThread customHandlerThread;
+    private long pressedTime;
 
     public BaseActivity() {
         baseActivity = this;
@@ -239,7 +239,7 @@ public class BaseActivity extends AppCompatActivity {
         return context.getSocketFactory();
     }
 
-    protected <R> R invoke(@NonNull String methodName, @NonNull Object... values) {
+    protected <RESULT> RESULT invoke(@NonNull String methodName, @NonNull Object... values) {
         Class<?>[] classes = new Class[values.length];
         int i = 0;
         for (Object o : values) {
@@ -249,12 +249,12 @@ public class BaseActivity extends AppCompatActivity {
         try {
             method = getClass().getDeclaredMethod(methodName, classes);
             method.setAccessible(true);
-            return (R) method.invoke(this, values);
+            return (RESULT) method.invoke(this, values);
         } catch (Exception e) {
             try {
                 method = getClass().getMethod(methodName, classes);
                 method.setAccessible(true);
-                return (R) method.invoke(this, values);
+                return (RESULT) method.invoke(this, values);
             } catch (Exception e_) {
                 throw new RuntimeException(e_);
             }
