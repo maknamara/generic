@@ -38,5 +38,6 @@ public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
         String str = statementBuilder.prepareStatementString();
         logger.debug(tag + str);
         Log.d(tag, str);
+        System.out.println(tag + str);
     }
 }
