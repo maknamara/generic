@@ -36,8 +36,8 @@ public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
         StackTraceElement st = Thread.currentThread().getStackTrace()[3];
         String tag = getClass().getName() + "." + st.getMethodName();
         String str = statementBuilder.prepareStatementString();
-        logger.debug(tag + str);
         Log.d(tag, str);
-        System.out.println(tag + str);
+        logger.debug(tag + ": " + str);
+        System.out.println(tag + ": " + str);
     }
 }

@@ -26,7 +26,9 @@ public class BaseService<T extends BaseEntity, D extends GenericDAO<T>, V extend
     public void save(T t) throws Exception {
         validador.validateRecording(t);
         if (t.getId() == null) {
-            t.setRegistrationDate(new Date());
+            if (t.getRegistrationDate() == null) {
+                t.setRegistrationDate(new Date());
+            }
         }
         dao.createOrUpdate(t);
     }
