@@ -30,8 +30,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
+import br.com.maknamara.DI;
 import br.com.maknamara.component.CustomHandlerThread;
-import br.com.maknamara.model.di.DI;
 import br.com.maknamara.model.exceptions.RuleException;
 
 @SuppressWarnings({"unused", "unchecked"})

@@ -16,8 +16,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 
+import br.com.maknamara.annotation.Inject;
 import br.com.maknamara.model.BaseEntity;
-import br.com.maknamara.model.annotation.Inject;
 import dalvik.system.DexFile;
 import dalvik.system.PathClassLoader;
 

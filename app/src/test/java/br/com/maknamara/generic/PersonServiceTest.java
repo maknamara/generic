@@ -6,9 +6,9 @@ import android.content.Context;
 
 import org.junit.Test;
 
+import br.com.maknamara.DI;
 import br.com.maknamara.activity.BaseApplication;
-import br.com.maknamara.model.annotation.Inject;
-import br.com.maknamara.model.di.DI;
+import br.com.maknamara.annotation.Inject;
 
 public class PersonServiceTest {
 
@@ -17,8 +17,8 @@ public class PersonServiceTest {
 
     @Test
     public void injectDependencies() {
-        Context appContext = new BaseApplication();
-        DI.setBean("context", appContext);
+        //A classe BaseApplication tem a seguinte linha: DI.setBean("context", this);
+        Context context = new BaseApplication();
         DI.inject(this);
         assertNotNull(this.personService);
     }
