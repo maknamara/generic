@@ -51,7 +51,7 @@ afterEvaluate {
 
 dependencies {
     api project(path: ':component')
-    api 'br.com.maknamara:di:0.0.1'
+    api 'br.com.maknamara:tools-dependency-injection:0.0.1'
     api 'com.j256.ormlite:ormlite-android:6.1'
     implementation 'org.jetbrains:annotations:15.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'

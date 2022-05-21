@@ -6,9 +6,9 @@ import android.content.Context;
 
 import org.junit.Test;
 
-import br.com.maknamara.DI;
 import br.com.maknamara.activity.BaseApplication;
-import br.com.maknamara.annotation.Inject;
+import br.com.maknamara.di.DI;
+import br.com.maknamara.di.annotation.Inject;
 
 public class PersonServiceTest {
 

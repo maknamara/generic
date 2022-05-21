@@ -2,7 +2,7 @@ package br.com.maknamara.activity;
 
 import android.app.Application;
 
-import br.com.maknamara.DI;
+import br.com.maknamara.di.DI;
 
 public class BaseApplication extends Application {
 
