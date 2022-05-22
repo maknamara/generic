@@ -10,25 +10,26 @@ public class RequestManager {
     public RequestManager() {
     }
 
-    public void get(URL url,OnResponseCallback callback) throws Exception {
+    public void get(URL url, OnResponseCallback callback) throws Exception {
         URLConnection connection = url.openConnection();
         connection.setRequestProperty("Content-type", "application/json");
         connection.setRequestProperty("Accept", "application/json");
-        StringBuffer response = new StringBuffer(1);
+        StringBuilder response = new StringBuilder(1);
         try (Scanner scanner = new Scanner(connection.getInputStream())) {
             while (scanner.hasNextLine()) {
                 response.append(scanner.nextLine());
             }
         }
-        callback.onResponse(response);
+        callback.onResponse(response.toString());
     }
 
-    public void get(String url,OnResponseCallback callback) throws Exception {
+    public void get(String url, OnResponseCallback callback) throws Exception {
         URL _url = new URL(url);
-        get(_url,callback);
+        get(_url, callback);
     }
 
+    @FunctionalInterface
     public interface OnResponseCallback {
-        void onResponse(StringBuffer response);
+        void onResponse(String response);
     }
 }

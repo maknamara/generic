@@ -39,10 +39,12 @@ public class Async<P, T> {
         });
     }
 
+    @FunctionalInterface
     public interface Executable<P, T> {
         List<T> execute(P... params) throws Exception;
     }
 
+    @FunctionalInterface
     public interface Manipulable<T> {
         void manipulate(List<T> result) throws Exception;
     }
