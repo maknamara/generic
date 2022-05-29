@@ -105,7 +105,7 @@ public class BaseActivity extends AppCompatActivity {
         showToastLong(getString(resourceId));
     }
 
-    protected void showToastLong(@NonNull String message) {
+    protected void showToastLong(@NonNull CharSequence message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
@@ -113,27 +113,27 @@ public class BaseActivity extends AppCompatActivity {
         showToastShort(getString(resourceId));
     }
 
-    protected void showToastShort(@NonNull String message) {
+    protected void showToastShort(@NonNull CharSequence message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    protected void log(String message) {
-        Log.v(getClass().getName() + "handleExceptions", message);
+    protected void log(@NonNull CharSequence message) {
+        Log.v(getClass().getName() + "handleExceptions", message.toString());
     }
 
     protected void log(Throwable e) {
         log(e.getMessage(), e);
     }
 
-    protected void log(String message, Throwable e) {
-        Log.v(getClass().getName() + "handleExceptions", message, e);
+    protected void log(@NonNull CharSequence message, Throwable e) {
+        Log.v(getClass().getName() + "handleExceptions", message.toString(), e);
     }
 
     protected void showAlertOk(int messageId) {
         showAlertOk(getResources().getString(messageId));
     }
 
-    protected void showAlertOk(String message) {
+    protected void showAlertOk(CharSequence message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle(R.string.message_alert);
@@ -148,7 +148,7 @@ public class BaseActivity extends AppCompatActivity {
         showAlertOkCancel(getResources().getString(messageId), onClickListener);
     }
 
-    protected void showAlertOkCancel(String message, DialogInterface.OnClickListener onClickListener) {
+    protected void showAlertOkCancel(CharSequence message, DialogInterface.OnClickListener onClickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle(R.string.message_alert);
@@ -168,7 +168,7 @@ public class BaseActivity extends AppCompatActivity {
         return showAwait(getString(resourceId));
     }
 
-    protected AlertDialog showAwait(String message) {
+    protected AlertDialog showAwait(CharSequence message) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
         LinearLayout ll = new LinearLayout(BaseActivity.this);
