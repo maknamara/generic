@@ -35,7 +35,7 @@ public class BaseService<T extends BaseEntity, D extends GenericDAO<T>, V extend
                 t.setRegistrationDate(new Date());
             }
         }
-        dao.createOrUpdate(t);
+        dao.save(t);
     }
 
     public void delete(T t) throws Exception {

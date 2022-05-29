@@ -48,4 +48,8 @@ public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
         showSQL(qb);
         return qb.queryForFirst();
     }
+
+    public void save(T t) throws SQLException {
+        createOrUpdate(t);
+    }
 }
