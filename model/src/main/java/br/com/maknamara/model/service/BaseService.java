@@ -20,6 +20,10 @@ public class BaseService<T extends BaseEntity, D extends GenericDAO<T>, V extend
         this.validador = validador;
     }
 
+    public T findById(Long id) throws Exception {
+        return dao.findById(id);
+    }
+
     public List<T> findAll() throws Exception {
         return dao.queryForAll();
     }
