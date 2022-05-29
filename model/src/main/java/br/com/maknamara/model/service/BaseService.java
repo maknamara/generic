@@ -3,6 +3,7 @@ package br.com.maknamara.model.service;
 import androidx.annotation.NonNull;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class BaseService<T extends BaseEntity, D extends GenericDAO<T>, V extend
         dao.delete(t);
     }
 
-    public void delete(List<T> list) throws Exception {
+    public void delete(@NonNull Collection<T> list) throws Exception {
         for (T t : list) {
             delete(t);
         }
