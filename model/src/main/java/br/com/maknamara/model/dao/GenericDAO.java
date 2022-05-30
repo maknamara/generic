@@ -60,10 +60,19 @@ public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
                 field.setAccessible(isAccessible);
 
                 if (value != null) {
-                    where.and();
-                    if (CharSequence.class.isAssignableFrom(field.getType()) && !BaseValidator.getEmptyIfNull(value.toString()).isEmpty()) {
-                        where.like(field.getName(), "%" + value + "%");
+                    if (BaseEntity.class.isAssignableFrom(field.getType())) {
+                        Long idValue = ((BaseEntity) value).getId();
+                        if (idValue != null) {
+                            where.and();
+                            where.like(field.getName() + "_id", "%" + value + "%");
+                        }
+                    } else if (CharSequence.class.isAssignableFrom(field.getType())) {
+                        if (!BaseValidator.getEmptyIfNull(value.toString()).isEmpty()) {
+                            where.and();
+                            where.like(field.getName(), "%" + value + "%");
+                        }
                     } else {
+                        where.and();
                         where.eq(field.getName(), value);
                     }
                 }
