@@ -14,6 +14,7 @@ import com.j256.ormlite.stmt.Where;
 
 import java.lang.reflect.Field;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 import br.com.maknamara.model.BaseEntity;
@@ -51,8 +52,7 @@ public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
         where.raw("1 = 1");
 
         for (Field field : fields) {
-
-            if (!"id,registrationDate".contains(field.getName())) {
+            if (!"id,registrationDate".contains(field.getName()) && !Collection.class.isAssignableFrom(field.getType())) {
                 boolean isAccessible = field.isAccessible();
 
                 field.setAccessible(true);
