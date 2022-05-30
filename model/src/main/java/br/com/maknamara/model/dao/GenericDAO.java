@@ -10,10 +10,17 @@ import com.j256.ormlite.logger.LoggerFactory;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.StatementBuilder;
+import com.j256.ormlite.stmt.Where;
 
+import java.lang.reflect.Field;
 import java.sql.SQLException;
+import java.util.List;
 
 import br.com.maknamara.model.BaseEntity;
+import br.com.maknamara.model.validator.BaseValidator;
+import br.com.maknamara.tools.RuleChecker;
+import br.com.maknamara.tools.ToolReflection;
+import br.com.maknamara.tools.ToolString;
 
 public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
 
@@ -26,13 +33,42 @@ public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
         initialize();
     }
 
-    public void showSQL(@NonNull StatementBuilder<T, Long> statementBuilder) throws SQLException {
+    protected void showSQL(@NonNull StatementBuilder<T, Long> statementBuilder) throws SQLException {
         StackTraceElement st = Thread.currentThread().getStackTrace()[3];
         String tag = getClass().getName() + "." + st.getMethodName();
         String str = statementBuilder.prepareStatementString();
         Log.d(tag, str);
         logger.debug(tag + ": " + str);
         System.out.println(tag + ": " + str);
+    }
+
+    protected void createWhereExampleClause(@NonNull StatementBuilder<T, Long> statementBuilder, @NonNull T t) throws Exception {
+        ToolReflection toolReflection = new ToolReflection(new ToolString(), new RuleChecker());
+        List<Field> fields = toolReflection.getFields(t.getClass());
+
+        Where<T, Long> where = statementBuilder.where();
+
+        where.raw("1 = 1");
+
+        for (Field field : fields) {
+
+            if (!"id,registrationDate".contains(field.getName())) {
+                boolean isAccessible = field.isAccessible();
+
+                field.setAccessible(true);
+                Object value = field.get(t);
+                field.setAccessible(isAccessible);
+
+                if (value != null) {
+                    where.and();
+                    if (CharSequence.class.isAssignableFrom(field.getType()) && !BaseValidator.getEmptyIfNull(value.toString()).isEmpty()) {
+                        where.like(field.getName(), "%" + value + "%");
+                    } else {
+                        where.eq(field.getName(), value);
+                    }
+                }
+            }
+        }
     }
 
     public void clearTable() throws SQLException {
