@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="message_await">Await</string>
-    <string name="message_alert">Attention!</string>
     <string name="about">About</string>
-    <string name="press_back_again_to_exit">Press back again to exit</string>
+    <string name="clear">Clear</string>
+    <string name="delete">Delete</string>
+    <string name="export">Export</string>
+    <string name="export_points_as_json_file">Json</string>
+    <string name="export_points_as_kml_file">kml</string>
+    <string name="import_">Import</string>
+    <string name="import_points_from_json_file">Json</string>
     <string name="last_update_time">Last update time: </string>
-    <string name="version">Version: </string>
+    <string name="list">List</string>
     <string name="logo">Logo</string>
+    <string name="message_alert">Attention!</string>
+    <string name="message_await">Await</string>
+    <string name="press_back_again_to_exit">Press back again to exit</string>
+    <string name="save">Save</string>
+    <string name="search">Search</string>
+    <string name="version">Version: </string>
 </resources>
