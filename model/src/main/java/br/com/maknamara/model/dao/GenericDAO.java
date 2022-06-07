@@ -15,7 +15,6 @@ import com.j256.ormlite.stmt.Where;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.List;
 
 import br.com.maknamara.di.annotation.Inject;
 import br.com.maknamara.model.BaseEntity;
@@ -45,7 +44,7 @@ public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
     }
 
     protected void createWhereExampleClause(@NonNull StatementBuilder<T, Long> statementBuilder, @NonNull T t) throws Exception {
-        List<Field> fields = toolReflection.getFields(t.getClass());
+        Collection<Field> fields = toolReflection.getFields(t.getClass());
 
         Where<T, Long> where = statementBuilder.where();
 

@@ -97,7 +97,7 @@ public class BaseActivity extends AppCompatActivity {
                 sb.append("\r\n");
             }
         }
-        this.log(sb.toString(), e);
+        this.log(sb, e);
         showAlertOk(sb.toString());
     }
 
@@ -134,14 +134,16 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void showAlertOk(CharSequence message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        runOnUiThread(() -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle(R.string.message_alert);
-        builder.setMessage(message);
-        builder.setPositiveButton("OK", null);
-        builder.setIcon(android.R.drawable.ic_dialog_info);
+            builder.setTitle(R.string.message_alert);
+            builder.setMessage(message);
+            builder.setPositiveButton("OK", null);
+            builder.setIcon(android.R.drawable.ic_dialog_info);
 
-        builder.create().show();
+            builder.create().show();
+        });
     }
 
     protected void showAlertOkCancel(int messageId, DialogInterface.OnClickListener onClickListener) {
