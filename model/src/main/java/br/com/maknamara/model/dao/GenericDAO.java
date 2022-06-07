@@ -17,15 +17,16 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
+import br.com.maknamara.di.annotation.Inject;
 import br.com.maknamara.model.BaseEntity;
 import br.com.maknamara.model.validator.BaseValidator;
-import br.com.maknamara.tools.RuleChecker;
 import br.com.maknamara.tools.ToolReflection;
-import br.com.maknamara.tools.ToolString;
 
 public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
 
     private static Logger logger;
+    @Inject
+    private ToolReflection toolReflection;
 
     public GenericDAO(@NonNull Helper helper, Class<T> clazz) throws SQLException {
         super(clazz);
@@ -44,7 +45,6 @@ public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
     }
 
     protected void createWhereExampleClause(@NonNull StatementBuilder<T, Long> statementBuilder, @NonNull T t) throws Exception {
-        ToolReflection toolReflection = new ToolReflection(new ToolString(), new RuleChecker());
         List<Field> fields = toolReflection.getFields(t.getClass());
 
         Where<T, Long> where = statementBuilder.where();
