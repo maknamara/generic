@@ -5,8 +5,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.j256.ormlite.dao.BaseDaoImpl;
-import com.j256.ormlite.logger.Logger;
-import com.j256.ormlite.logger.LoggerFactory;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.StatementBuilder;
@@ -23,13 +21,11 @@ import br.com.maknamara.tools.ToolReflection;
 
 public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
 
-    private static Logger logger;
     @Inject
     private ToolReflection toolReflection;
 
     public GenericDAO(@NonNull Helper helper, Class<T> clazz) throws SQLException {
         super(clazz);
-        logger = LoggerFactory.getLogger(getClass());
         setConnectionSource(helper.getConnectionSource());
         initialize();
     }
@@ -39,8 +35,6 @@ public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
         String tag = getClass().getName() + "." + st.getMethodName();
         String str = statementBuilder.prepareStatementString();
         Log.d(tag, str);
-        logger.debug(tag + ": " + str);
-        System.out.println(tag + ": " + str);
     }
 
     protected void createWhereExampleClause(@NonNull StatementBuilder<T, Long> statementBuilder, @NonNull T t) throws Exception {
