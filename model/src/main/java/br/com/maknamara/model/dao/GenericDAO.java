@@ -57,7 +57,7 @@ public class GenericDAO<T extends BaseEntity> extends BaseDaoImpl<T, Long> {
                         Long idValue = ((BaseEntity) value).getId();
                         if (idValue != null) {
                             where.and();
-                            where.like(field.getName() + "_id", "%" + value + "%");
+                            where.eq(field.getName() + "_id", value);
                         }
                     } else if (CharSequence.class.isAssignableFrom(field.getType())) {
                         if (!BaseValidator.getEmptyIfNull(value.toString()).isEmpty()) {
