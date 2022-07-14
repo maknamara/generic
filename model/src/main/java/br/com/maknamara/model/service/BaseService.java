@@ -13,11 +13,11 @@ import br.com.maknamara.model.validator.BaseValidator;
 
 public class BaseService<T extends BaseEntity, D extends GenericDAO<T>, V extends BaseValidator<T>> {
     protected D dao;
-    protected V validador;
+    protected V validator;
 
-    public BaseService(@NonNull D dao, @NonNull V validador) {
+    public BaseService(@NonNull D dao, @NonNull V validator) {
         this.dao = dao;
-        this.validador = validador;
+        this.validator = validator;
     }
 
     public T findById(Long id) throws Exception {
@@ -29,7 +29,7 @@ public class BaseService<T extends BaseEntity, D extends GenericDAO<T>, V extend
     }
 
     public void save(T t) throws Exception {
-        validador.validateRecording(t);
+        validator.validateRecording(t);
         if (t.getId() == null) {
             if (t.getRegistrationDate() == null) {
                 t.setRegistrationDate(new Date());
@@ -39,7 +39,7 @@ public class BaseService<T extends BaseEntity, D extends GenericDAO<T>, V extend
     }
 
     public void delete(T t) throws Exception {
-        validador.validateDeletion(t);
+        validator.validateDeletion(t);
         dao.delete(t);
     }
 

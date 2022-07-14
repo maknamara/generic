@@ -194,7 +194,7 @@ public class BaseActivity extends AppCompatActivity {
         return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
-    protected void requestPermissions(String... permissions) {
+    protected void requestPermissions(@NonNull String... permissions) {
         boolean hasPermission = true;
         for (String permission : permissions) {
             if (!isPermissionGranted(permission)) {
