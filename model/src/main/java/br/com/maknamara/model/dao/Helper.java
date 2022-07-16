@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.NonNull;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
-import com.j256.ormlite.logger.LocalLogBackend;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
@@ -30,7 +29,11 @@ public class Helper extends OrmLiteSqliteOpenHelper {
     public Helper(@NonNull @Inject("context") Context context) {
         super(context, "database.db", null, DATABASE_VERSION);
         this.context = context;
-        System.setProperty(LocalLogBackend.LOCAL_LOG_LEVEL_PROPERTY, "TRACE");
+        /*TODO PARA HABILITAR O LOG DO ORMLITE FAZER O SEGUINTE
+        https://blog.log4think.com/how-to-enable-ormlite-internal-log-on-android
+        NA LINHA DE COMANDOS: adb shell
+        E NA SEQUENCIA: setprop log.tag.ORMLite DEBUG
+        VERBOSE, DEBUG, INFO, WARN, ERROR, ASSERT, or SUPPRESS*/
     }
 
     @Override
