@@ -2,12 +2,17 @@
 <resources>
     <string name="about">About</string>
     <string name="clear">Clear</string>
+    <string name="confirm_data_deletion">Confirm data deletion?</string>
+    <string name="data_deleted_successfully">Data deleted successfully!</string>
+    <string name="data_exported_successfully">Data exported successfully!</string>
+    <string name="data_imported_successfully">Data imported with success!</string>
+    <string name="data_saved_successfully">Data saved successfully!</string>
     <string name="delete">Delete</string>
-    <string name="export">Export</string>
-    <string name="export_points_as_json_file">Json</string>
-    <string name="export_points_as_kml_file">kml</string>
+    <string name="export_">Export</string>
+    <string name="json">Json</string>
+    <string name="exporting_data_in_json_format_wait_please">Exporting data in json format. Wait please...</string>
+    <string name="importing_data_from_a_json_format_wait_please">Importing data from a json format. Wait please...</string>
     <string name="import_">Import</string>
-    <string name="import_points_from_json_file">Json</string>
     <string name="last_update_time">Last update time: </string>
     <string name="list">List</string>
     <string name="logo">Logo</string>

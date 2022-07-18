@@ -3,6 +3,7 @@ package br.com.maknamara.activity;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -18,12 +19,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.lang.reflect.Method;
 import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.net.ssl.SSLContext;
@@ -32,13 +39,17 @@ import javax.net.ssl.TrustManagerFactory;
 
 import br.com.maknamara.component.CustomHandlerThread;
 import br.com.maknamara.di.DI;
+import br.com.maknamara.di.annotation.Inject;
 import br.com.maknamara.model.exceptions.RuleException;
+import br.com.maknamara.tools.FileBuilder;
 
 @SuppressWarnings({"unused", "unchecked"})
 public class BaseActivity extends AppCompatActivity {
 
     protected BaseActivity baseActivity;
     protected CustomHandlerThread customHandlerThread;
+    @Inject
+    protected ObjectMapper objectMapper;
     private long pressedTime;
 
     public BaseActivity() {
@@ -255,6 +266,28 @@ public class BaseActivity extends AppCompatActivity {
             } catch (Exception e_) {
                 throw new RuntimeException(e_);
             }
+        }
+    }
+
+    protected void exportData(Object data, String folderName) throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+        Date date = new Date();
+        String format = sdf.format(date);
+        String fileName = format + ".json";
+
+        FileBuilder fb = new FileBuilder(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+
+        fb.append(folderName);
+        fb.append(fileName);
+
+        File file = fb.build();
+
+        file.getParentFile().mkdirs();
+
+        try (FileWriter fw = new FileWriter(file)) {
+            String str = objectMapper.writeValueAsString(data);
+            fw.append(str);
+            fw.flush();
         }
     }
 }
