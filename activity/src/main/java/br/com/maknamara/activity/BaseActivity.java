@@ -32,6 +32,7 @@ import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Scanner;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -269,7 +270,23 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void exportData(Object data, String folderName) throws Exception {
+    protected <T> T importDataFromJSON(File file, Class<T> clazz) {
+        try {
+            try (Scanner scanner = new Scanner(file)) {
+                StringBuilder sb = new StringBuilder(1);
+
+                while (scanner.hasNextLine()) {
+                    sb.append(scanner.nextLine());
+                }
+
+                return objectMapper.readValue(sb.toString(), clazz);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void exportDataAsJSON(Object data, String folderName) throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
         Date date = new Date();
         String format = sdf.format(date);
