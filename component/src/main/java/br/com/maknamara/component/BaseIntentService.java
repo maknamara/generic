@@ -6,8 +6,12 @@ import android.content.pm.PackageManager;
 import androidx.core.content.ContextCompat;
 
 import br.com.maknamara.di.DI;
+import br.com.maknamara.di.annotation.Inject;
 
 public abstract class BaseIntentService extends IntentService {
+
+    @Inject
+    protected Logger logger;
 
     public BaseIntentService() {
         super("BIS-" + System.currentTimeMillis());

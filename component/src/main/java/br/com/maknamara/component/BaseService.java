@@ -9,8 +9,12 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import br.com.maknamara.di.DI;
+import br.com.maknamara.di.annotation.Inject;
 
 public abstract class BaseService extends Service {
+
+    @Inject
+    protected Logger logger;
 
     public BaseService() {
         DI.inject(this);

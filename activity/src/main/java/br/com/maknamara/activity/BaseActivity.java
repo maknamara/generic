@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -39,6 +38,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 import br.com.maknamara.component.CustomHandlerThread;
+import br.com.maknamara.component.Logger;
 import br.com.maknamara.di.DI;
 import br.com.maknamara.di.annotation.Inject;
 import br.com.maknamara.model.exceptions.RuleException;
@@ -51,6 +51,8 @@ public class BaseActivity extends AppCompatActivity {
     protected CustomHandlerThread customHandlerThread;
     @Inject
     protected ObjectMapper objectMapper;
+    @Inject
+    protected Logger logger;
     private long pressedTime;
 
     public BaseActivity() {
@@ -109,7 +111,7 @@ public class BaseActivity extends AppCompatActivity {
                 sb.append("\r\n");
             }
         }
-        this.log(sb, e);
+        logger.log(getClass(), throwable.getMessage(), e);
         showAlertOk(sb.toString());
     }
 
@@ -127,18 +129,6 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void showToastShort(@NonNull CharSequence message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    protected void log(@NonNull CharSequence message) {
-        Log.v(getClass().getName() + "handleExceptions", message.toString());
-    }
-
-    protected void log(Throwable e) {
-        log(e.getMessage(), e);
-    }
-
-    protected void log(@NonNull CharSequence message, Throwable e) {
-        Log.v(getClass().getName() + "handleExceptions", message.toString(), e);
     }
 
     protected void showAlertOk(int messageId) {

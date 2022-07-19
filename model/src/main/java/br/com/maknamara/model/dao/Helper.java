@@ -9,7 +9,6 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.Objects;
 import br.com.maknamara.di.annotation.Inject;
 import br.com.maknamara.model.BaseEntity;
 import dalvik.system.DexFile;
-import dalvik.system.PathClassLoader;
 
 public class Helper extends OrmLiteSqliteOpenHelper {
 
@@ -85,12 +83,6 @@ public class Helper extends OrmLiteSqliteOpenHelper {
         String packageName = Objects.requireNonNull(BaseEntity.class.getPackage()).getName();
         if (classes.isEmpty()) {
             //TODO RESOLVER PROBLEMA DA CLASSE DEPRECIADA: DexFile
-
-            Enumeration<URL> enumeration_ = PathClassLoader.getSystemResources(context.getPackageCodePath());
-            if (enumeration_.hasMoreElements()) {
-                URL url = enumeration_.nextElement();
-                url.toURI();
-            }
 
             DexFile dexFile = new DexFile(context.getPackageCodePath());
             Enumeration<String> enumeration = dexFile.entries();
