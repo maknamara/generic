@@ -28,7 +28,6 @@ public class MobileClassResolver extends NoMobileClassResolver {
             while (enumeration.hasMoreElements()) {
                 String className = enumeration.nextElement();
                 if (className.startsWith("br.com.maknamara") && !className.contains("$")) {
-                    System.out.printf("From apk : %s\r\n", className);
                     registerClassIfAnnotationIsPresent(registered, className);
                 }
             }
