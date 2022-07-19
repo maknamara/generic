@@ -15,12 +15,14 @@ public class MobileClassResolver extends NoMobileClassResolver {
 
     public MobileClassResolver(Context context) {
         super();
+        warning("starting");
         this.context = context;
     }
 
     @Override
     public Map<String, Class<?>> resolve() {
         try {
+            warning("starting");
             Map<String, Class<?>> registered = new HashMap<>();
             DexFile dexFile = new DexFile(context.getPackageCodePath());
             Enumeration<String> enumeration = dexFile.entries();
