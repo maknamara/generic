@@ -20,22 +20,13 @@ import androidx.core.content.ContextCompat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Method;
-import java.security.KeyStore;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Scanner;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManagerFactory;
 
 import br.com.maknamara.component.CustomHandlerThread;
 import br.com.maknamara.component.Logger;
@@ -203,39 +194,6 @@ public class BaseActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, permissions, 1);
             }
         }
-    }
-
-    protected SSLSocketFactory getSSLSocketFactory(@NonNull String crtFileName) throws Exception {
-        // Load CAs from an InputStream
-        // (could be from a resource or ByteArrayInputStream or ...)
-        CertificateFactory cf = CertificateFactory.getInstance("X.509");
-
-        BufferedInputStream bis = new BufferedInputStream(getAssets().open(crtFileName));
-        Certificate ca;
-        try {
-            ca = cf.generateCertificate(bis);
-            System.out.println("ca=" + ((X509Certificate) ca).getSubjectDN());
-        } finally {
-            bis.close();
-        }
-
-        // Create a KeyStore containing our trusted CAs
-        String keyStoreType = KeyStore.getDefaultType();
-        KeyStore keyStore = KeyStore.getInstance(keyStoreType);
-        keyStore.load(null, null);
-        keyStore.setCertificateEntry("ca", ca);
-
-        // Create a TrustManager that trusts the CAs in our KeyStore
-        String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
-        TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
-        tmf.init(keyStore);
-
-        // Create an SSLContext that uses our TrustManager
-        SSLContext context = SSLContext.getInstance("TLS");
-        context.init(null, tmf.getTrustManagers(), null);
-
-        // Tell the URLConnection to use a SocketFactory from our SSLContext
-        return context.getSocketFactory();
     }
 
     protected <RESULT> RESULT invoke(@NonNull String methodName, @NonNull Object... values) {
