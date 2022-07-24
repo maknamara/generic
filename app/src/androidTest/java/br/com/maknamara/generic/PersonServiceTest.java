@@ -4,17 +4,22 @@ import static org.junit.Assert.assertNotNull;
 
 import android.content.Context;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import br.com.maknamara.activity.BaseApplication;
+import br.com.maknamara.component.MobileClassResolver;
 import br.com.maknamara.di.DI;
 import br.com.maknamara.di.NoMobileClassResolver;
 import br.com.maknamara.di.annotation.Inject;
 
+@RunWith(AndroidJUnit4.class)
 public class PersonServiceTest {
 
-    @Inject
+    @Inject("personService")
     private PersonService personService;
 
     @BeforeClass
@@ -23,9 +28,10 @@ public class PersonServiceTest {
     }
 
     @Test
-    public void injectDependencies() {
-        //A classe BaseApplication tem a seguinte linha: DI.setBean("context", this);
-        Context context = new BaseApplication();
+    public void useAppContext() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        DI.setClassResolver(new MobileClassResolver(context));
+        DI.setBean("context", this);
         DI.inject(this);
         assertNotNull(this.personService);
     }

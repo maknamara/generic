@@ -2,7 +2,6 @@ package br.com.maknamara.activity;
 
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.os.Environment;
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +37,7 @@ import br.com.maknamara.tools.FileBuilder;
 public class BaseActivity extends AppCompatActivity {
 
     protected BaseActivity baseActivity;
+    @Inject
     protected CustomHandlerThread customHandlerThread;
     @Inject
     protected ObjectMapper objectMapper;
@@ -47,8 +46,9 @@ public class BaseActivity extends AppCompatActivity {
     private long pressedTime;
 
     public BaseActivity() {
+        super();
         baseActivity = this;
-        customHandlerThread = new CustomHandlerThread();
+        DI.inject(this);
     }
 
     @Override
@@ -64,12 +64,6 @@ public class BaseActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        DI.inject(this);
-        super.onCreate(savedInstanceState);
     }
 
     @Override
