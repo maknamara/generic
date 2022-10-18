@@ -236,10 +236,9 @@ public class BaseActivity extends AppCompatActivity {
 
         FileBuilder fb = new FileBuilder(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
 
-        fb.append(folderName);
-        fb.append(fileName);
+        fb.appendPath(folderName);
 
-        File file = fb.build();
+        File file = fb.build(fileName);
 
         file.getParentFile().mkdirs();
 
